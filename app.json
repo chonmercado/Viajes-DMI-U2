@@ -22,7 +22,19 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "manifest": {
+        "short_name": "mihotel",
+        "name": "Mi Hotel",
+        "start_url": "/",
+        "display": "standalone",
+        "background_color": "#ffffff",
+        "theme_color": "#000000"
+      },
+      "serviceWorker": {
+        "src": "expo-service-worker.js"
+      },
+      "output": "static"
     }
   }
 }
