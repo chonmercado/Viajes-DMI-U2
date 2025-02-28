@@ -76,7 +76,7 @@ const HomeScreen = () => {
               source={require('../assets/images/a0da2529_y.jpg')}
               style={styles.image}
             />
-            <Text style={styles.offerText}>Mazatlán</Text>
+            <Text style={styles.offerText}>Cancún</Text>
             <Text style={styles.price}>$371</Text>
           </TouchableOpacity>
 

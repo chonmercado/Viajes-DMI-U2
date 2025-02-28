@@ -1,39 +1,44 @@
 import { useState } from 'react';
 import { createAccount, signIn } from '../services/AuthService';
-import User from '../models/User';
+import { ErrorMessages } from '../models/ErrorMessages';
 
 export const useAuthViewModel = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleCreateAccount = (email, password) => {
+  const handleCreateAccount = async (email, password) => {
     setLoading(true);
-    createAccount(email, password)
-      .then((userCredential) => {
-        const user = new User(userCredential.user.uid, userCredential.user.email, userCredential.user.nombre);
-        setUser(user);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
+    try {
+      const userCredential = await createAccount(email, password);
+      const user = userCredential.user;
+      setUser(user);
+      setLoading(false);
+      return true;
+    } catch (err) {
+      const errorMessage = ErrorMessages[err.code] || err.message;
+      setError(errorMessage);
+      setLoading(false);
+      return false;
+    }
   };
 
-  const handleSignIn = (email, password) => {
+  const handleSignIn = async (email, password) => {
     setLoading(true);
-    signIn(email, password)
-      .then((userCredential) => {
-        const user = new User(userCredential.user.uid, userCredential.user.email, userCredential.user.nombre);
-        setUser(user);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
+    try {
+      const userCredential = await signIn(email, password); 
+      const user = userCredential.user;
+      setUser(user);
+      setLoading(false);
+      return true;
+    } catch (err) {
+      const errorMessage = ErrorMessages[err.code] || err.message;
+      setError(errorMessage);
+      setLoading(false);
+      return false;
+    }
   };
+  
 
   return {
     user,

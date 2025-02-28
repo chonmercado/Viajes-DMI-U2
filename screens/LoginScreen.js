@@ -10,19 +10,26 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
   const uri = "https://img.lovepik.com/background/20211029/medium/lovepik-resort-hotel-cellphone-wallpaper-background-image_400261815.jpg"
-const profilePicture = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqVg_URh9Mvrm3NYaTlCUyiM7r382ohELc1g&s"
+  const profilePicture = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqVg_URh9Mvrm3NYaTlCUyiM7r382ohELc1g&s"
 
   const handleSignInPress = async () => {
-   // const isSuccess = await handleSignIn(email, password); // DESCOMENTAR PARA LOGIN CON FIREBASE
-   const isSuccess = true;
+    const isSuccess = await handleSignIn(email, password);
     if (isSuccess) {
       navigation.navigate('Home');
+    } else {
+      console.log('Error al iniciar sesión');
     }
   };
 
-  const handleCreateAccountPress = () => {
-    handleCreateAccount(email, password);
+  const handleCreateAccountPress = async () => {
+    const isSuccess = await handleCreateAccount(email, password);
+    if (isSuccess) {
+      navigation.navigate('Home');
+    } else {
+      console.log('Error al crear la cuenta');
+    }
   };
+  
 
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
