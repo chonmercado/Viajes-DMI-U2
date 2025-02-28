@@ -1,9 +1,17 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window'); // Obtener el ancho de la pantalla
 
 const HomeScreen = () => {
+  const navigation = useNavigation();  // Hook para la navegación
+
+  // Función para navegar a la pantalla de boletos
+  const navigateToBolet = () => {
+    navigation.navigate('Bolet');
+  };
+
   return (
     <ScrollView style={styles.container}>
       {/* Barra de navegación */}
@@ -23,24 +31,24 @@ const HomeScreen = () => {
       <View style={styles.offerContainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {/* Oferta de vuelo 1 */}
-          <View style={styles.offerCard}>
+          <TouchableOpacity onPress={navigateToBolet} style={styles.offerCard}>
             <Image
               source={require('../assets/images/02b89d5c_y.jpg')}
               style={styles.image}
             />
             <Text style={styles.offerText}>Acapulco</Text>
             <Text style={styles.price}>$371</Text>
-          </View>
+          </TouchableOpacity>
 
           {/* Oferta de vuelo 2 */}
-          <View style={styles.offerCard}>
+          <TouchableOpacity onPress={navigateToBolet} style={styles.offerCard}>
             <Image
               source={require('../assets/images/a0d800c0_y.jpg')}
               style={styles.image}
             />
             <Text style={styles.offerText}>Ciudad de México</Text>
             <Text style={styles.price}>$371</Text>
-          </View>
+          </TouchableOpacity>
 
           {/* Agrega más ofertas aquí */}
         </ScrollView>
@@ -53,24 +61,24 @@ const HomeScreen = () => {
       <View style={styles.offerContainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {/* Oferta 1 */}
-          <View style={styles.offerCard}>
+          <TouchableOpacity onPress={navigateToBolet} style={styles.offerCard}>
             <Image
               source={require('../assets/images/11cd32af_y.jpg')}
               style={styles.image}
             />
             <Text style={styles.offerText}>Mazatlán</Text>
             <Text style={styles.price}>$371</Text>
-          </View>
+          </TouchableOpacity>
 
           {/* Oferta 2 */}
-          <View style={styles.offerCard}>
+          <TouchableOpacity onPress={navigateToBolet} style={styles.offerCard}>
             <Image
               source={require('../assets/images/a0da2529_y.jpg')}
               style={styles.image}
             />
             <Text style={styles.offerText}>Mazatlán</Text>
             <Text style={styles.price}>$371</Text>
-          </View>
+          </TouchableOpacity>
 
           {/* Agrega más ofertas aquí */}
         </ScrollView>
