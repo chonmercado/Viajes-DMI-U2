@@ -3,14 +3,16 @@ import { Image, StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityInd
 import { useAuthViewModel } from '../viewmodels/AuthViewModel';
 import { useNavigation } from '@react-navigation/native';
 
+// Importa la imagen del logo
+import logo from '../assets/images/logo01.jpg';
+
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { user, error, loading, handleCreateAccount, handleSignIn } = useAuthViewModel();
   const navigation = useNavigation();
 
-  const uri = "https://img.lovepik.com/background/20211029/medium/lovepik-resort-hotel-cellphone-wallpaper-background-image_400261815.jpg"
-  const profilePicture = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqVg_URh9Mvrm3NYaTlCUyiM7r382ohELc1g&s"
+  const uri = "https://example.com/vacation-background.jpg"; // Reemplazar con imagen de vacaciones real
 
   const handleSignInPress = async () => {
     const isSuccess = await handleSignIn(email, password);
@@ -29,80 +31,134 @@ const LoginScreen = () => {
       console.log('Error al crear la cuenta');
     }
   };
-  
 
   if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
+    return <ActivityIndicator size="large" color="#ff9900" />;
   }
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri }} style={[styles.image, StyleSheet.absoluteFill]} />
-      <View style={styles.login}>
-        <Text style={styles.header}>Iniciar Sesión</Text>
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          style={styles.input}
-          placeholder="Correo Electrónico"
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <TextInput
-          value={password}
-          onChangeText={setPassword}
-          style={styles.input}
-          secureTextEntry={true}
-          placeholder="Contraseña"
-        />
-        {error && <Text style={styles.error}>{error}</Text>}
-        <TouchableOpacity onPress={handleSignInPress} style={[styles.button]}>
-                <Text style={{fontSize: 20, fontWeight: '400', color:'white'}}>Iniciar Sesión</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleCreateAccountPress} style={[styles.button, {backgroundColor: '#bd0c0c'}]}>
-                <Text style={{fontSize: 20, fontWeight: '400', color:'white'}}>Crear Cuenta</Text>
-              </TouchableOpacity>
+      <Image source={{ uri }} style={styles.image} />
+      <View style={styles.overlay}>
+        <View style={styles.loginContainer}>
+          {/* Agregar el logo aquí */}
+          <Image source={logo} style={styles.logo} />
+          
+          <Text style={styles.header}>¡Bienvenido!</Text>
+          <Text style={styles.subHeader}>¡Listo para tus vacaciones soñadas?</Text>
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            style={styles.input}
+            placeholder="Correo Electrónico"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            style={styles.input}
+            secureTextEntry={true}
+            placeholder="Contraseña"
+          />
+          {error && <Text style={styles.error}>{error}</Text>}
+
+          <TouchableOpacity onPress={handleSignInPress} style={styles.button}>
+            <Text style={styles.buttonText}>Iniciar Sesión</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleCreateAccountPress} style={[styles.button, styles.createAccountButton]}>
+            <Text style={styles.buttonText}>Crear Cuenta</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center'},
-  header: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
-  input: { 
-    width: 250, 
-    height: 40, 
-    marginBottom: 10, 
-    borderColor: '#ccc', 
-    borderWidth: 1, 
-    paddingLeft: 10, 
-    borderRadius: 5,
-    backgroundColor: '#FFF',
-    borderColor: '#fff',
-  },
-  login: {
-    width: '350',
-    height: '500',
-    borderColor: '#fff',
-    borderWidth: 2,
-    borderRadius: 10,
-    padding: 10,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 200,
-    backgroundColor: '#5ec4e5',
+    backgroundColor: '#F5F5F5',
   },
-  button: { 
-    width: 250, 
-    height: 40, 
-    backgroundColor: '#4CAF50', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    borderRadius: 5, 
-    marginBottom: 10 
+  image: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    opacity: 0.5,
   },
-  buttonText: { color: 'white', fontSize: 16 },
-  error: { color: 'red', marginBottom: 10 },
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  loginContainer: {
+    width: '100%',
+    maxWidth: 400,
+    backgroundColor: '#ffffff',
+    padding: 30,
+    borderRadius: 20,
+    boxShadow: '0 4px 30px rgba(0, 0, 0, 0.15)',
+    elevation: 10,
+    alignItems: 'center',
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    marginBottom: 20,
+  },
+  header: {
+    fontSize: 32,
+    fontWeight: '700',
+    color: '#2D5BFF',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  subHeader: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#FF7E1C',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  input: {
+    height: 50,
+    width: '100%',
+    borderColor: '#DDDDDD',
+    borderWidth: 1,
+    borderRadius: 25,
+    marginBottom: 15,
+    paddingLeft: 20,
+    fontSize: 16,
+    color: '#333333',
+    backgroundColor: '#F9F9F9',
+  },
+  button: {
+    height: 50,
+    width: '100%',
+    backgroundColor: '#FF7E1C',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 25,
+    marginBottom: 15,
+  },
+  createAccountButton: {
+    backgroundColor: '#2D5BFF',
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    fontWeight: '500',
+  },
+  error: {
+    color: 'red',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
 });
 
 export default LoginScreen;
